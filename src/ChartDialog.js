@@ -107,7 +107,7 @@ class RawSensorForm extends Component {
 
 		if (event.target.name === 'sensors'){
 			if (event.target.value.length > 0){
-				fetch(`http://localhost:8000/extracts/${event.target.value[0].number}/`)
+				fetch(`http://34.216.6.101:8000/extracts/${event.target.value[0].id}/`)
 				.then(response => response.json())
 				.then(extracts => {
 					this.setState({
@@ -134,7 +134,7 @@ class RawSensorForm extends Component {
 					data={this.props.sensors}
 					value={this.state.sensors}
 					textField='name'
-					dataItemKey='number'
+					dataItemKey='id'
 					onChange={this.handleChange}/>
 				<MultiSelect
 					key='extract-select'
@@ -368,7 +368,7 @@ class ModalForm extends Component {
 	}
 
 	addGraph () {
-		let url = `http://localhost:8000/graphs/${this.props.chartId}/`,
+		let url = `http://34.216.6.101:8000/graphs/${this.props.chartId}/`,
 		options = {
 			method:'POST',
 	        body:JSON.stringify(this.newGraph),

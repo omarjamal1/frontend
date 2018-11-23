@@ -172,7 +172,7 @@ class Dashboard extends Component {
   }
 
   addWidget(widget){
-    let url = 'http://localhost:8000/charts/' + this.props.tabId + '/';
+    let url = 'http://34.216.6.101:8000/charts/' + this.props.tabId + '/';
     fetch(url, 
       {
         method:'POST',
@@ -211,7 +211,7 @@ class Dashboard extends Component {
 
   loadCharts () {
     
-    let url = 'http://localhost:8000/charts/' + this.props.tabId;
+    let url = 'http://34.216.6.101:8000/charts/' + this.props.tabId;
     fetch(url)
     .then((response) => {
       return response.json();
@@ -226,7 +226,7 @@ class Dashboard extends Component {
 
   loadSensors() {
 
-    let url = 'http://localhost:8000/sensors/';
+    let url = 'http://34.216.6.101:8000/sensors/';
     fetch(url)
     .then((response) => {
       return response.json();
@@ -354,7 +354,7 @@ class App extends Component {
 
   signin = (credentials) => {
 
-    let url = 'http://localhost:8000/login/';
+    let url = 'http://34.216.6.101:8000/login/';
     fetch(url, 
       {
         method:'POST',
@@ -376,7 +376,7 @@ class App extends Component {
   }
 
   loadTabs(){
-    fetch('http://localhost:8000/tabs/')
+    fetch('http://34.216.6.101:8000/tabs/')
     .then((response) => {
       return response.json();
     })
