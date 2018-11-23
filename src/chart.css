@@ -1,0 +1,322 @@
+.chart-card.mdl-card {
+  width: 100%;
+}
+.chart-card > .mdl-card__title {
+  /*color: #fff;*/
+  height: 300px;
+  /*background: url('../assets/demos/welcome_card.jpg') center / cover;*/
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0 16px;
+  padding-bottom: 5px;
+}
+.chart-card > .mdl-card__menu {
+  /*color: #fff;*/
+
+}
+
+.chart-card > .mdl-card__actions {
+	display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.chart-card i.material-icons {
+	/*color: #3f51b5;*/
+}
+
+.add-tab-button {
+	color:white;
+  position: relative;
+  margin: 0;
+  border: none;
+  padding-top: 8px;
+  float: left;
+  position: relative;
+  display: block;
+  flex-grow: 0;
+  flex-shrink: 0;
+  text-decoration: none;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 14px;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+
+.add-tab-button:hover {
+
+}
+
+.ag-add-button {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  z-index: 9999;
+  background: rgba(64,89,179, .5) !important;
+}
+
+.ag-add-button:hover {
+ background: rgba(64,89,179,1) !important; 
+}
+
+.popup-content {
+    padding: 10px;
+    color: #787878;
+    background-color: #fcf7f8;
+    border: 1px solid rgba(0,0,0,.05);
+  }
+
+  .mdl-menu__item {
+    line-height: 30px;
+    /*font-size: 20px;*/
+    height: 30px;
+    /*color: blue;*/
+  }
+
+.calculations-row {
+  flex-direction: row;
+  justify-content: stretch;
+  margin: 0;
+  padding: 0 8px;
+}
+
+.sensors-row {
+  justify-content: space-between;
+  margin: 0;
+
+}
+
+
+.k-list-container, .k-daterangepicker-wrap, .k-animation-container {
+  z-index: 10001 !important;
+  /*position: absolute;*/
+}
+
+.modal-wrap {
+  display: flex;
+  flex-flow: row wrap;
+  /*align-items: flex-end;*/
+  justify-content: space-between;
+}
+
+.modal-calendar-wrap {
+  display: flex;
+  flex-flow: column wrap;
+  /*justify-content: space-between;*/
+  margin: 10px;
+}
+
+.modal-form-wrap {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  flex: 1 1 auto;
+  margin: 10px;
+}
+
+.modal-form-wrap > *, .modal-calendar-wrap > *{
+  width: 100% !important;
+}
+
+.modal-form-inputs-wrap >* {
+  flex: 1 auto;
+}
+
+.k-daterangepicker-wrap {
+  /*width: 50% !important;*/
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.k-daterangepicker-wrap > * {
+  min-width: 150px !important;
+}
+
+.modal-form-inputs-wrap{
+  display: flex !important;
+  flex-flow: row wrap;
+}
+
+.modal-widget-dialog-inputs-wrap {
+  display: flex !important;
+  flex-flow: column wrap;
+  align-items: stretch;
+}
+
+.k-dialog {
+  height: 100%;
+  width: 100%;
+}
+
+/* Begin: Graph chips*/
+
+.ag-graphchip-container {
+  list-style: none;
+  display:flex;
+  flex-flow: row wrap;
+   /*align-items: stretch; */
+  padding: 0;
+  height: 120px;
+  /*min-width: 200px;*/
+  overflow: scroll;
+}
+
+.ag-graphchip-item:hover > span {
+  background:#e0e0e0;
+  cursor:pointer;
+}
+
+.ag-graphchip-item .mdl-chip .mdl-chip__contact i {
+   vertical-align:sub; 
+}
+
+.ag-graphchip-item .mdl-chip {
+  background:  #f0f0f0;
+}
+
+.ag-graphchip-item .mdl-chip__action:hover {
+  color:#cc0000;
+  opacity:1;
+}
+
+
+.ag-stations-grid {
+  justify-content: center;
+}
+
+
+.ag-station-card.mdl-card {
+  width: 100%;
+  height: 150px;
+  background: #3E4EB8;
+}
+.ag-station-card > .mdl-card__actions {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.ag-station-card > .mdl-card__title {
+  align-items: flex-start;
+}
+.ag-station-card > .mdl-card__title > h4 {
+  margin-top: 0;
+}
+.ag-station-card > .mdl-card__actions {
+  display: flex;
+  box-sizing:border-box;
+  align-items: center;
+}
+.ag-station-card > .mdl-card__actions > .material-icons {
+  padding-right: 10px;
+}
+.ag-station-card > .mdl-card__title,
+.ag-station-card > .mdl-card__actions,
+.ag-station-card > .mdl-card__actions > .mdl-button {
+  color: #fff;
+}
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  margin-top: 10%;
+  margin-left: 35%;
+  align-items: center;
+}
+
+.login-card .mdl-card__title-text {
+  text-align: center;
+    -webkit-align-self: center;
+    -ms-flex-item-align: center;
+    align-self: center;
+    margin-top: 10px;
+}
+
+.login-card .mdl-textfield {
+  margin: 0 auto;
+    align-self: center;
+}
+
+.login-card .mdl-card__actions {
+  display: flex;
+}
+/* End: Graph chips*/
+
+
+
+
+/* 
+  ********Responsive styles ****************
+  ##Device = Desktops
+  ##Screen = 1281px to higher resolution desktops
+*/
+
+@media (min-width: 1281px) {
+  
+  .k-dialog {
+    height: 50%;
+    width: 50%;
+  }
+
+}
+
+/* 
+  ##Device = Laptops, Desktops
+  ##Screen = B/w 1025px to 1280px
+*/
+
+@media (min-width: 1025px) and (max-width: 1280px) {
+  
+  .k-dialog {
+    height: 80%;
+    width: 600px;
+  }
+
+  .add-station-dialog .k-dialog {
+    height: 260px !important;
+  }
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (portrait)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  
+  
+  
+}
+
+/* 
+  ##Device = Tablets, Ipads (landscape)
+  ##Screen = B/w 768px to 1024px
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+  
+  
+}
+
+/* 
+  ##Device = Low Resolution Tablets, Mobiles (Landscape)
+  ##Screen = B/w 481px to 767px
+*/
+
+@media (min-width: 481px) and (max-width: 767px) {
+  
+ 
+}
+
+/* 
+  ##Device = Most of the Smartphones Mobiles (Portrait)
+  ##Screen = B/w 320px to 479px
+*/
+
+@media (min-width: 320px) and (max-width: 480px) {
+  
+  
+  
+}
