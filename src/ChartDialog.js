@@ -352,7 +352,7 @@ class ModalForm extends Component {
 	handleChange (form, data) {
 		let sensors = [];
 		for (let i = 0; i < data.sensors.length; i++)
-			sensors.push(data.sensors[i].number)
+			sensors.push(data.sensors[i].id)
 
 
 	    this.newGraph = {
