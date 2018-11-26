@@ -26,7 +26,7 @@ class GraphChip extends Component {
 		      <span className="mdl-chip mdl-chip--contact mdl-chip--deletable">
 		        <span className="mdl-chip__contact" style={{background:this.props.color, color:'white'}}><i className=" material-icons" >{type}</i></span>
 		        <span className="mdl-chip__text">{this.props.label}</span>
-		        <a href="javascript:void(0)" className="mdl-chip__action"><i className="material-icons">cancel</i></a>
+		        <a href="javascript:void(0)" onClick={() => this.props.remove(this.props.graphId)} className="mdl-chip__action"><i className="material-icons">cancel</i></a>
 		      </span>
 		    </li>
 		);
@@ -183,8 +183,24 @@ class DegreeDaysForm extends Component {
 		
 		return(
 			<div className='modal-form-inputs-wrap'>
-				<MultiSelect required={true} label="SENSOR(S)" data={['temp','moisture','humidity', 'water potential']}/>
-				<MultiSelect label="EXTRACT" data={['temp','moisture','humidity', 'water potential']}	/>
+				<MultiSelect key='sensor-select'
+					name='sensors'
+					required={true}
+					label="SENSOR(S)" 
+					data={this.props.sensors}
+					value={this.state.sensors}
+					textField='name'
+					dataItemKey='id'
+					onChange={this.handleChange}/>
+				<MultiSelect
+					key='extract-select'
+					name='extract'
+					label="SENSOR EXTRACT"
+					data={this.state.extracts}
+					value={this.state.extract}
+					textField='description'
+					dataItemKey='id'
+					onChange={this.handleChange}/>
 				<NumericTextBox required={true} key='dd-input' label='THRESHOLD'/>
 				<DropDownList label="TYPE" data={['Line', 'Bar']}	/>
 				<ColorSelect label="COLOR" data={this.state.colors} />
@@ -198,22 +214,104 @@ class PAWForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			name: '',
-			colors: ['blue', 'lightblue', 'tomato', 'lime', 'green', 'lightgreen', 'skyblue', 'red']
+			graphName: '',
+			colors: ['blue', 'lightblue', 'tomato', 'lime', 'green', 'lightgreen', 'skyblue', 'red'],
+			sensors: [], 
+			extracts:[],
+			extract:null,
+			'fc':null,
+			'wp':null,
 	    };
+
+	    this.setInitialValues = this.setInitialValues.bind(this);
+	    this.handleChange = this.handleChange.bind(this);
+	}
+
+	setInitialValues(){
+		this.setState(this.props.initialValues);
+		this.setState(this.props.options);
+	}
+
+	handleChange (event) {
+		console.log(event.target.value);
+		this.setState({
+			[event.target.name] : event.target.name === 'graphType' ? event.target.value.value :event.target.value 
+		});
+
+		if (event.target.name === 'sensors'){
+			if (event.target.value.length > 0){
+				fetch(`http://34.216.6.101:8000/extracts/${event.target.value[0].id}/`)
+				.then(response => response.json())
+				.then(extracts => {
+					this.setState({
+						extracts: extracts
+					});
+				});	
+			}
+		}
+	}
+
+	componentDidUpdate(){
+		console.log(this.state);
+		this.props.handleChange('paw', this.state);
 	}
 
 	render() {
 		
 		return(
 			<div className='modal-form-inputs-wrap'>
-				<MultiSelect required={true} label="SENSOR(S)"  data={['temp','moisture','humidity', 'water potential']}/>
-				<MultiSelect label="EXTRACT"  data={['temp','moisture','humidity', 'water potential']}	/>
-				<NumericTextBox required={true} key='fc-input' label='FIELD CAPACITY'/>
-				<NumericTextBox required={true} key='wp-input'label='WILTING POINT'/>
-				<DropDownList label="TYPE" data={['Line', 'Bar']}	/>
-				<ColorSelect label="COLOR" data={this.state.colors} />
-				<Input required={true} key='label-input' label='LABEL'/>
+				<MultiSelect key='sensor-select'
+					name='sensors'
+					required={true}
+					label="SENSOR(S)" 
+					data={this.props.sensors}
+					value={this.state.sensors}
+					textField='name'
+					dataItemKey='id'
+					onChange={this.handleChange}/>
+				<MultiSelect
+					key='extract-select'
+					name='extract'
+					label="SENSOR EXTRACT"
+					data={this.state.extracts}
+					value={this.state.extract}
+					textField='description'
+					dataItemKey='id'
+					onChange={this.handleChange}/>
+				<NumericTextBox
+					name='fc'
+					required={true}
+					key='fc-input'
+					label='FIELD CAPACITY'
+					value={this.state.fc}
+					onChange={this.handleChange}/>
+				<NumericTextBox
+					name='wp'
+					required={true}
+					key='wp-input'
+					label='WILTING POINT'
+					value={this.state.wp}
+					onChange={this.handleChange}/>
+				<DropDownList
+					label="CHART TYPE" 
+					name='graphType'
+					data={[{text:'Line', value:'line'}, {text:'Bar', value:'column'}]}
+					textField='text'
+					dataItemKey='value'
+					value={this.state.type}
+					onChange={this.handleChange}/>
+				<ColorSelect
+					label="COLOR"
+					name='graphColor'
+					data={this.state.colors}
+					value={this.state.color}
+					onChange={this.handleChange}/>
+				<Input
+					required={true}
+					name='graphName'
+					label='LABEL'
+					value={this.state.label}
+					onChange={this.handleChange}/>
 			</div>
 		);
 	}
@@ -331,6 +429,7 @@ class ModalForm extends Component {
 	    this.switchForm = this.switchForm.bind(this);
 	    this.handleChange = this.handleChange.bind(this);
 	    this.addGraph = this.addGraph.bind(this);
+	    this.removeGraph = this.removeGraph.bind(this);
 	}
 
 	calculations = ['Raw', 'PAW', 'Chill Portions', 'Degree Days', 'Chill Hours', 'ETo', 'Dew Point', 'Saturation ex EC', 'Custom Formula'];
@@ -353,7 +452,12 @@ class ModalForm extends Component {
 		let sensors = [];
 		for (let i = 0; i < data.sensors.length; i++)
 			sensors.push(data.sensors[i].id)
-
+		let variables = [];
+		if (form === 'paw')
+			variables = [
+				{variable:'fc',value:data.fc},
+				{variable:'wp',value:data.wp}
+			]
 
 	    this.newGraph = {
 	      label:data.graphName,
@@ -363,7 +467,9 @@ class ModalForm extends Component {
 	      _type:data.graphType,
 	      color:data.graphColor,
 	      chart:this.props.chartId,
-	      variables:[],
+	      variables:variables,
+	      fc:data.fc,
+	      wp:data.wp,
 	    };
 	}
 
@@ -392,13 +498,37 @@ class ModalForm extends Component {
 		});
 	}
 
+	removeGraph (graph) {
+		let url = `http://34.216.6.101:8000/graph/${graph}/`,
+		options = {
+			method:'DELETE',
+	        headers: {
+	            "Content-Type": "application/json; charset=utf-8",
+			}
+		}
+
+		fetch(url, options)
+		.then(response => {
+			let graphList = this.state.graphs.slice();
+			let deletedGraph = null;
+			for (let i = 0;i < graphList.length; i++){
+				if (graphList[i].id == graph)
+					deletedGraph = i
+			}
+
+			graphList.splice(deletedGraph, 1)
+
+			this.setState({graphs:graphList});
+		});
+	}
+
 	render(){
 
 		let form;
 
 		switch (this.state.calculation){
 			case 'PAW':
-				form = <PAWForm/>;
+				form = <PAWForm sensors={this.props.sensors} handleChange={this.handleChange} />;
 				break;
 			case 'Chill Portions':
 				form = <RawSensorForm sensors={this.props.sensors}/>;
@@ -428,9 +558,11 @@ class ModalForm extends Component {
 			return (
 					<GraphChip 
 						type={graph.type}
-						color={graph.color}
+						color={graph.lineColor}
 						label={graph.title}
 						key={graph.id}
+						graphId={graph.id}
+						remove={this.removeGraph}
 					/>
 				);
 		});

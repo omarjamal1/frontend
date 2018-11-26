@@ -147,6 +147,38 @@ class Chart extends Component {
 
   updateChart(data){
     this.closeEditingModal();
+    fetch(`http://34.216.6.101:8000/graphs/${this.props.chartId}/`)
+    .then(response => response.json())
+    .then(graphs => {
+      let graphList = [];
+      for (let i = 0; i < graphs.length; i++){
+          let graph = {
+            "id"            : graphs[i].id,
+            "title"         : graphs[i].label,
+            "type"          : graphs[i]._type,
+            "lineColor"     : graphs[i].color,
+            "valueField"    : graphs[i].label,
+            "fillAlphas"    : graphs[i]._type === 'line' ? 0:1,
+            "lineThickness"  : graphs[i]._type === 'line' ? 2:1,
+            "behindColumns" : graphs[i]._type === 'column' ? true:false,
+          };
+          graphList.push(graph);
+      }
+      let dataProvider = [];
+      for (let i = 0; i < graphs.length; i++){
+          for(let j=0; j < graphs[i].data.length; j++){
+            if (dataProvider[j] === undefined)
+              dataProvider[j] = {};
+            dataProvider[j][graphs[i].label] = graphs[i].data[j].value
+            dataProvider[j]['date'] = graphs[i].data[j].date
+          }
+      }
+
+      this.setState({
+        graphs:graphList,
+        dataProvider:dataProvider
+      });
+    });
   }
 
   render(){

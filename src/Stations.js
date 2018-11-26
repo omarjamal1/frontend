@@ -21,7 +21,11 @@ class StationForm extends Component {
       [event.target.name] : event.target.value
     });
 
-    this.props.handleChange(this.state);
+    
+  }
+
+  componentDidUpdate(){
+    this.props.handleChange(this.state); 
   }
 
   render() {
@@ -58,17 +62,17 @@ class ModalForm extends Component {
 
   constructor(props){
     super(props);
-    this.state = {
+    this.station = {
       name: '',
       password:'',
       serial:'' 
       };
-
-      this.handleChange = this.handleChange.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(station){
-    this.setState(station);
+    this.station = station;
+    console.log(this.station);
   }
 
   render(){
@@ -83,7 +87,7 @@ class ModalForm extends Component {
         </div>
         <DialogActionsBar>
             <button className="k-button" onClick={this.props.close}>Cancel</button>
-            <button className="k-button" onClick={() => {this.props.addStation(this.state)}}>Add</button>
+            <button className="k-button" onClick={() => {this.props.addStation(this.station)}}>Add</button>
         </DialogActionsBar>
       </Dialog>;
       return (dialog);
