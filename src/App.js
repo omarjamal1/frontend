@@ -12,6 +12,7 @@ import Modal from './Modal';
 import WidgetDialog from './WidgetDialog';
 import Login from './Login';
 import Chart from './Chart';
+import Chart2 from './chart2';
 
 class Layout extends Component {
   constructor(props){
@@ -63,7 +64,7 @@ class Layout extends Component {
               href='/dashboard/'>
                 Dashboard
               </a>
-              <a 
+             {/* <a 
                 className="mdl-navigation__link"
                 onClick={(e) => {this.props.onClick(e, 'profile')}}
               href='/profile/'>
@@ -74,7 +75,7 @@ class Layout extends Component {
                 onClick={(e) => {this.props.onClick(e, 'settings')}}
               href='/profile/'>
                 Settings
-              </a>
+              </a> */}
                <a  
                 className="mdl-navigation__link"
                 onClick={(e) => {this.props.onClick(e, 'stations')}}
@@ -264,7 +265,7 @@ class Dashboard extends Component {
   render() {
 
     let activeClass = this.props.isActive ? "is-active" : ""; 
-    let charts = this.state.charts.map((chart) => <Chart chartId={chart.id} key={chart.id} graphs={chart.graphs} sensors={this.state.sensors}/>);
+    let charts = this.state.charts.map((chart) => <Chart2 chartId={chart.id} key={chart.id} graphs={chart.graphs} sensors={this.state.sensors}/>);
 
     return (
 

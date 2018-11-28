@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 import { DropDownList, MultiSelect } from '@progress/kendo-react-dropdowns';
-import { Input, NumericTextBox } from '@progress/kendo-react-inputs';
+import { Input, NumericTextBox, Switch } from '@progress/kendo-react-inputs';
 import {DateRangePicker} from '@progress/kendo-react-dateinputs';
 
 
@@ -87,11 +87,14 @@ class RawSensorForm extends Component {
 			colors: ['blue', 'lightblue', 'tomato', 'lime', 'green', 'lightgreen', 'skyblue', 'red'],
 			sensors: [], 
 			extracts:[],
-			extract:null
+			extract:null,
+			paw_guides:false,
+			pawGuides:null,
 	    };
 
 	    this.setInitialValues = this.setInitialValues.bind(this);
 	    this.handleChange = this.handleChange.bind(this);
+	    this.itemRender = this.itemRender.bind(this);
 	}
 
 	setInitialValues(){
@@ -100,9 +103,9 @@ class RawSensorForm extends Component {
 	}
 
 	handleChange (event) {
-		console.log(event.target.value);
 		this.setState({
-			[event.target.name] : event.target.name === 'graphType' ? event.target.value.value :event.target.value 
+			[event.target.name] : event.target.name === 'graphType' || event.target.name === 'paw_guides' ? event.target.value.value :event.target.value,
+			pawGuides: event.target.name === 'paw_guides' ? event.target.value: this.setState.pawGuides
 		});
 
 		if (event.target.name === 'sensors'){
@@ -123,6 +126,12 @@ class RawSensorForm extends Component {
 		this.props.handleChange('raw', this.state);
 	}
 
+	itemRender (li, itemProps) {
+		console.log(itemProps);
+		const itemChildren = <div> {li.props.children} <div style={{ color: "#00F" }}> {itemProps.dataItem.device.name} [{itemProps.dataItem.port}]</div> </div>;
+		return React.cloneElement(li, li.props, itemChildren);
+	}
+
 	render() {
 		
 		return(
@@ -135,6 +144,7 @@ class RawSensorForm extends Component {
 					value={this.state.sensors}
 					textField='name'
 					dataItemKey='id'
+					itemRender={this.itemRender}
 					onChange={this.handleChange}/>
 				<MultiSelect
 					key='extract-select'
@@ -165,6 +175,26 @@ class RawSensorForm extends Component {
 					label='LABEL'
 					value={this.state.label}
 					onChange={this.handleChange}/>
+				<DropDownList
+					label="PAW RANGE GUIDES" 
+					name='paw_guides'
+					data={[{text:'ON', value:true}, {text:'OFF', value:false}]}
+					textField='text'
+					dataItemKey='value'
+					value={this.state.pawGuides}
+					onChange={this.handleChange}/>
+				<Input
+					name='axis_min'
+					label='AXIS MIN'
+					value={this.state.axis_min}
+					onChange={this.handleChange}/>
+				<Input
+					name='axis_max'
+					label='AXIS MAX'
+					value={this.state.axis_max}
+					onChange={this.handleChange}/>
+
+
 			</div>
 		);
 	}
@@ -221,6 +251,8 @@ class PAWForm extends Component {
 			extract:null,
 			'fc':null,
 			'wp':null,
+			paw_guides:false,
+			pawGuides:null
 	    };
 
 	    this.setInitialValues = this.setInitialValues.bind(this);
@@ -233,9 +265,9 @@ class PAWForm extends Component {
 	}
 
 	handleChange (event) {
-		console.log(event.target.value);
 		this.setState({
-			[event.target.name] : event.target.name === 'graphType' ? event.target.value.value :event.target.value 
+			[event.target.name] : event.target.name === 'graphType' || event.target.name === 'paw_guides' ? event.target.value.value :event.target.value,
+			pawGuides: event.target.name === 'paw_guides' ? event.target.value: this.setState.pawGuides
 		});
 
 		if (event.target.name === 'sensors'){
@@ -311,6 +343,24 @@ class PAWForm extends Component {
 					name='graphName'
 					label='LABEL'
 					value={this.state.label}
+					onChange={this.handleChange}/>
+				<DropDownList
+					label="PAW RANGE GUIDES" 
+					name='paw_guides'
+					data={[{text:'ON', value:true}, {text:'OFF', value:false}]}
+					textField='text'
+					dataItemKey='value'
+					value={this.state.pawGuides}
+					onChange={this.handleChange}/>
+				<Input
+					name='axis_min'
+					label='AXIS MIN'
+					value={this.state.axis_min}
+					onChange={this.handleChange}/>
+				<Input
+					name='axis_max'
+					label='AXIS MAX'
+					value={this.state.axis_max}
 					onChange={this.handleChange}/>
 			</div>
 		);
@@ -459,17 +509,25 @@ class ModalForm extends Component {
 				{variable:'wp',value:data.wp}
 			]
 
+		let extract = null;
+		if (data.extract !== null)
+			if(data.extract.length > 0)
+				extract = data.extract[0].id
+
 	    this.newGraph = {
 	      label:data.graphName,
 	      calculation:form,
 	      sensors:sensors,
-	      extract :data.extract ? data.extract[0].id: null,
+	      extract :extract,
 	      _type:data.graphType,
 	      color:data.graphColor,
 	      chart:this.props.chartId,
 	      variables:variables,
 	      fc:data.fc,
 	      wp:data.wp,
+	      paw_guides:data.paw_guides,
+	      axis_min:data.axis_min,
+	      axis_max:data.axis_max
 	    };
 	}
 
@@ -512,7 +570,7 @@ class ModalForm extends Component {
 			let graphList = this.state.graphs.slice();
 			let deletedGraph = null;
 			for (let i = 0;i < graphList.length; i++){
-				if (graphList[i].id == graph)
+				if (graphList[i].id === graph)
 					deletedGraph = i
 			}
 

@@ -3,7 +3,7 @@
 }
 .chart-card > .mdl-card__title {
   /*color: #fff;*/
-  height: 300px;
+  height: 400px;
   /*background: url('../assets/demos/welcome_card.jpg') center / cover;*/
   flex-direction: column;
   align-items: stretch;
@@ -123,6 +123,10 @@
 
 .modal-form-inputs-wrap >* {
   flex: 1 auto;
+}
+
+.ag-switch-container {
+  min-width: 200px;
 }
 
 .k-daterangepicker-wrap {
