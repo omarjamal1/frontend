@@ -152,7 +152,7 @@ class Chart2 extends Component {
     //chart data
     chart.data = this.state.dataProvider;
     // chart scrollbar
-    chart.scrollbarX = new am4charts.XYChartScrollbar();
+    // chart.scrollbarX = new am4charts.XYChartScrollbar();
     // chart.scrollbarX.height = .2;
     // chart.scrollbarX.maxHeight = 20;
 
@@ -239,6 +239,8 @@ class Chart2 extends Component {
       }else{
         series = chart.series.push(new am4charts.ColumnSeries());
         series.fill = am4core.color(graph.color);
+        series.stroke = null;
+        series.columns.template.toolTipText = '{name}\n[bold font-size: 20]{valueY}[/]';
       }
 
       //series data-field:
@@ -253,8 +255,8 @@ class Chart2 extends Component {
       // series.tensionY = 0.1;
       series.yAxis = axis;
       series.xAxis = dateAxis;
-      series.toolTipText = '{name}\n[bold font-size: 20]{valueY}[/]';
-      chart.scrollbarX.series.push(series);
+      
+      // chart.scrollbarX.series.push(series);
     }
 
     // chart cursor
@@ -263,7 +265,7 @@ class Chart2 extends Component {
     // chart legend
     chart.legend = new am4charts.Legend();
     chart.legend.position = 'top';
-    chart.scrollbarX.parent = chart.bottomAxesContainer;
+    // chart.scrollbarX.parent = chart.bottomAxesContainer;
     return chart;
 
   }
