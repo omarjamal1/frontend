@@ -257,6 +257,7 @@ class PAWForm extends Component {
 
 	    this.setInitialValues = this.setInitialValues.bind(this);
 	    this.handleChange = this.handleChange.bind(this);
+	    this.itemRender = this.itemRender.bind(this);
 	}
 
 	setInitialValues(){
@@ -288,6 +289,12 @@ class PAWForm extends Component {
 		this.props.handleChange('paw', this.state);
 	}
 
+	itemRender (li, itemProps) {
+		console.log(itemProps);
+		const itemChildren = <div> {li.props.children} <div style={{ color: "#00F" }}> {itemProps.dataItem.device.name} [{itemProps.dataItem.port}]</div> </div>;
+		return React.cloneElement(li, li.props, itemChildren);
+	}
+
 	render() {
 		
 		return(
@@ -300,6 +307,7 @@ class PAWForm extends Component {
 					value={this.state.sensors}
 					textField='name'
 					dataItemKey='id'
+					itemRender={this.itemRender}
 					onChange={this.handleChange}/>
 				<MultiSelect
 					key='extract-select'
