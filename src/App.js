@@ -265,7 +265,7 @@ class Dashboard extends Component {
   render() {
 
     let activeClass = this.props.isActive ? "is-active" : ""; 
-    let charts = this.state.charts.map((chart) => <Chart2 chartId={chart.id} key={chart.id} graphs={chart.graphs} sensors={this.state.sensors}/>);
+    let charts = this.state.charts.map((chart) => <Chart2 name={chart.name} chartId={chart.id} key={chart.id} graphs={chart.graphs} sensors={this.state.sensors}/>);
 
     return (
 

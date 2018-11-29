@@ -127,11 +127,11 @@ class Chart2 extends Component {
         for(let j=0; j < this.props.graphs[i].data.length; j++){
           if (dataProvider[j] === undefined)
             dataProvider[j] = {};
-          dataProvider[j][this.props.graphs[i].label] = this.props.graphs[i].data[j].value
-          dataProvider[j]['date'] = this.props.graphs[i].data[j].date
+          dataProvider[j][this.props.graphs[i].label] = this.props.graphs[i].data[j].value;
+          dataProvider[j]['date'] = new Date(this.props.graphs[i].data[j].date);
         }
     }
-
+    console.log(dataProvider)
      return dataProvider;
 
   }
@@ -154,10 +154,13 @@ class Chart2 extends Component {
     // chart scrollbar
     chart.scrollbarX = new am4charts.XYChartScrollbar();
     // chart.scrollbarX.height = .2;
-    chart.scrollbarX.maxHeight = 20;
+    // chart.scrollbarX.maxHeight = 20;
 
     let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-    // dateAxis.renderer.grid.template.location = 0;
+    dateAxis.renderer.grid.template.location = 0;
+    dateAxis.renderer.minGridDistance = 40;
+    
+
     dateAxis.id = 'dateAxisID';
 
     for (let i = 0; i < graphs.length; i++ ){
@@ -249,6 +252,7 @@ class Chart2 extends Component {
       // series.tensionX = .9;
       // series.tensionY = 0.1;
       series.yAxis = axis;
+      series.xAxis = dateAxis;
       series.toolTipText = '{name}\n[bold font-size: 20]{valueY}[/]';
       chart.scrollbarX.series.push(series);
     }
@@ -332,7 +336,9 @@ class Chart2 extends Component {
 
             <div className='mdl-card__actions mdl-card--border'>
               
-              <div className="mdl-layout-spacer"></div>
+              <div className="mdl-layout-spacer">
+                {this.props.name}
+              </div>
               <button 
               className='mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect'
               onClick={this.openEditingModal}
