@@ -299,7 +299,7 @@ class Chart2 extends Component {
 
   updateChart(data){
     this.closeEditingModal();
-    fetch(`http://34.216.6.101:8000/graphs/${this.props.chartId}/`)
+    fetch(`http://beta.agviewer.net:8000/graphs/${this.props.chartId}/`)
     .then(response => response.json())
     .then(graphs => {
 

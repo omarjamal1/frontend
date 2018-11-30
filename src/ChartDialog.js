@@ -110,7 +110,7 @@ class RawSensorForm extends Component {
 
 		if (event.target.name === 'sensors'){
 			if (event.target.value.length > 0){
-				fetch(`http://34.216.6.101:8000/extracts/${event.target.value[0].id}/`)
+				fetch(`http://beta.agviewer.net:8000/extracts/${event.target.value[0].id}/`)
 				.then(response => response.json())
 				.then(extracts => {
 					this.setState({
@@ -163,7 +163,8 @@ class RawSensorForm extends Component {
 					dataItemKey='value'
 					value={this.state.type}
 					onChange={this.handleChange}/>
-				<ColorSelect
+				<Input
+					type='color'
 					label="COLOR"
 					name='graphColor'
 					data={this.state.colors}
@@ -273,7 +274,7 @@ class PAWForm extends Component {
 
 		if (event.target.name === 'sensors'){
 			if (event.target.value.length > 0){
-				fetch(`http://34.216.6.101:8000/extracts/${event.target.value[0].id}/`)
+				fetch(`http://beta.agviewer.net:8000/extracts/${event.target.value[0].id}/`)
 				.then(response => response.json())
 				.then(extracts => {
 					this.setState({
@@ -540,7 +541,7 @@ class ModalForm extends Component {
 	}
 
 	addGraph () {
-		let url = `http://34.216.6.101:8000/graphs/${this.props.chartId}/`,
+		let url = `http://beta.agviewer.net:8000/graphs/${this.props.chartId}/`,
 		options = {
 			method:'POST',
 	        body:JSON.stringify(this.newGraph),
@@ -565,7 +566,7 @@ class ModalForm extends Component {
 	}
 
 	removeGraph (graph) {
-		let url = `http://34.216.6.101:8000/graph/${graph}/`,
+		let url = `http://beta.agviewer.net:8000/graph/${graph}/`,
 		options = {
 			method:'DELETE',
 	        headers: {
