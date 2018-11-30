@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 import { Input, Switch } from '@progress/kendo-react-inputs';
 import {DateRangePicker} from '@progress/kendo-react-dateinputs';
-import Modal from './Modal';
 
 class StationForm extends Component {
   constructor(props){

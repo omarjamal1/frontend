@@ -131,7 +131,7 @@ class Stations extends Component {
       showDialog: false
     }
 
-    fetch('http://beta.agviewer.net:8000/stations/')
+    fetch('http://dev.agviewer.net/api/stations/')
     .then((response) => {
       return response.json();
     })
@@ -161,7 +161,7 @@ class Stations extends Component {
 
   addStation(station){
     console.log(station);
-    fetch('http://beta.agviewer.net:8000/stations/', 
+    fetch('http://dev.agviewer.net/api/stations/', 
       {
         method:'POST',
         body:JSON.stringify(station),
