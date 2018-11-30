@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 import { DropDownList, MultiSelect } from '@progress/kendo-react-dropdowns';
-import { Input, NumericTextBox, Switch } from '@progress/kendo-react-inputs';
+import { Input, NumericTextBox } from '@progress/kendo-react-inputs';
 import {DateRangePicker} from '@progress/kendo-react-dateinputs';
 
 

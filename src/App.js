@@ -10,9 +10,7 @@ import '@progress/kendo-theme-material/dist/all.css';
 import Stations from './Stations';
 import Modal from './Modal';
 import WidgetDialog from './WidgetDialog';
-import Login from './Login';
 import Chart from './Chart';
-import Chart2 from './chart2';
 
 class Layout extends Component {
   constructor(props){
@@ -265,7 +263,7 @@ class Dashboard extends Component {
   render() {
 
     let activeClass = this.props.isActive ? "is-active" : ""; 
-    let charts = this.state.charts.map((chart) => <Chart2 name={chart.name} chartId={chart.id} key={chart.id} graphs={chart.graphs} sensors={this.state.sensors}/>);
+    let charts = this.state.charts.map((chart) => <Chart name={chart.name} chartId={chart.id} key={chart.id} graphs={chart.graphs} sensors={this.state.sensors}/>);
 
     return (
 
