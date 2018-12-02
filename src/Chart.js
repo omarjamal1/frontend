@@ -80,7 +80,7 @@ class QuickDateMenu extends Component {
   }
 } 
 
-class Chart2 extends Component {
+class Chart extends Component {
   constructor(props) {
     super(props);
 
@@ -379,4 +379,4 @@ class Chart2 extends Component {
   }
 }
 
-export default Chart2;
+export default Chart;

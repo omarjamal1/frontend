@@ -453,21 +453,114 @@ class CustomFormulaForm extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			name: '',
-			colors: ['blue', 'lightblue', 'tomato', 'lime', 'green', 'lightgreen', 'skyblue', 'red']
+			graphName: '',
+			colors: ['blue', 'lightblue', 'tomato', 'lime', 'green', 'lightgreen', 'skyblue', 'red'],
+			sensors: [], 
+			extracts:[],
+			extract:null,
+			// formula:null
 	    };
+
+	    this.setInitialValues = this.setInitialValues.bind(this);
+	    this.handleChange = this.handleChange.bind(this);
+	    this.itemRender = this.itemRender.bind(this);
+	}
+
+	setInitialValues(){
+		this.setState(this.props.initialValues);
+		this.setState(this.props.options);
+	}
+
+	handleChange (event) {
+
+		this.setState({
+			[event.target.name] : event.target.name === 'graphType' ? event.target.value.value :event.target.value,
+		});
+
+		if (event.target.name === 'sensors'){
+			if (event.target.value.length > 0){
+				fetch(`http://dev.agviewer.net/api/extracts/${event.target.value[0].id}/`)
+				.then(response => response.json())
+				.then(extracts => {
+					this.setState({
+						extracts: extracts
+					});
+				});	
+			}
+		}
+	}
+
+	componentDidUpdate(){
+		console.log(this.state);
+		this.props.handleChange('custom', this.state);
+	}
+
+	itemRender (li, itemProps) {
+		console.log(itemProps);
+		const itemChildren = <div> {li.props.children} <div style={{ color: "#00F" }}> {itemProps.dataItem.device.name} [{itemProps.dataItem.port}]</div> </div>;
+		return React.cloneElement(li, li.props, itemChildren);
 	}
 
 	render() {
 		
 		return(
 			<div className='modal-form-inputs-wrap'>
-				<MultiSelect required={true} label="SENSOR" data={['temp','moisture','humidity', 'water potential']}/>
-				<MultiSelect label="EXTRACT" data={['temp','moisture','humidity', 'water potential']}	/>
-				<Input required={true} key='formula-input' label='FORMULA' title='e.g. x^2 + 3*x + 1'/>
-				<DropDownList label="TYPE" data={['Line', 'Bar']}	/>
-				<ColorSelect label="COLOR" data={this.state.colors} />
-				<Input required={true} key='label-input' label='LABEL'/>
+				<MultiSelect key='sensor-select'
+					name='sensors'
+					required={true}
+					label="SENSOR(S)" 
+					data={this.props.sensors}
+					value={this.state.sensors}
+					textField='name'
+					dataItemKey='id'
+					itemRender={this.itemRender}
+					onChange={this.handleChange}/>
+				<MultiSelect
+					key='extract-select'
+					name='extract'
+					label="SENSOR EXTRACT"
+					data={this.state.extracts}
+					value={this.state.extract}
+					textField='description'
+					dataItemKey='id'
+					onChange={this.handleChange}/>
+				<Input
+					// required={true}
+					name='formula'
+					label="FORMULA"
+					value={this.state.formula}
+					onChange={this.handleChange}/>
+				<DropDownList
+					label="CHART TYPE" 
+					name='graphType'
+					data={[{text:'Line', value:'line'}, {text:'Bar', value:'column'}]}
+					textField='text'
+					dataItemKey='value'
+					value={this.state.type}
+					onChange={this.handleChange}/>
+				<Input
+					type='color'
+					label="COLOR"
+					name='graphColor'
+					data={this.state.colors}
+					value={this.state.color}
+					onChange={this.handleChange}/>
+				<Input
+					required={true}
+					name='graphName'
+					label='LABEL'
+					value={this.state.label}
+					onChange={this.handleChange}/>
+				<Input
+					name='axis_min'
+					label='AXIS MIN'
+					value={this.state.axis_min}
+					onChange={this.handleChange}/>
+				<Input
+					name='axis_max'
+					label='AXIS MAX'
+					value={this.state.axis_max}
+					onChange={this.handleChange}/>
 			</div>
 		);
 	}
@@ -536,7 +629,8 @@ class ModalForm extends Component {
 	      wp:data.wp,
 	      paw_guides:data.paw_guides,
 	      axis_min:data.axis_min,
-	      axis_max:data.axis_max
+	      axis_max:data.axis_max,
+	      formula: data.formula
 	    };
 	}
 
@@ -614,7 +708,7 @@ class ModalForm extends Component {
 				form = <SatExECForm/>;
 				break;
 			case 'Custom Formula':
-				form = <CustomFormulaForm/>;
+				form = <CustomFormulaForm sensors={this.props.sensors} handleChange={this.handleChange}/>;
 				break;
 			default:
 				form = <RawSensorForm sensors={this.props.sensors} handleChange={this.handleChange}/>;
