@@ -80,7 +80,7 @@ class QuickDateMenu extends Component {
   }
 } 
 
-class Chart extends Component {
+class Chart2 extends Component {
   constructor(props) {
     super(props);
 
@@ -298,7 +298,7 @@ class Chart extends Component {
 
   updateChart(data){
     this.closeEditingModal();
-    fetch(`http://dev.agviewer.net/api/graphs/${this.props.chartId}/`)
+    fetch(`http://beta.agviewer.net:8000/graphs/${this.props.chartId}/`)
     .then(response => response.json())
     .then(graphs => {
 
@@ -379,4 +379,4 @@ class Chart extends Component {
   }
 }
 
-export default Chart;
+export default Chart2;
