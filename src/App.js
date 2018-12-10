@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-import 'amcharts3/amcharts/amcharts';
-import 'amcharts3/amcharts/serial';
-import 'amcharts3/amcharts/themes/light';
 import 'material-design-lite/material.min.css';
 import 'material-design-lite/material.min';
 import './chart.css';
