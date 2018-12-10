@@ -110,7 +110,7 @@ class RawSensorForm extends Component {
 
 		if (event.target.name === 'sensors'){
 			if (event.target.value.length > 0){
-				fetch(`http://dev.agviewer.net/api/extracts/${event.target.value[0].id}/`)
+				fetch(`http://beta.agviewer.net/api/extracts/${event.target.value[0].id}/`)
 				.then(response => response.json())
 				.then(extracts => {
 					this.setState({
@@ -274,7 +274,7 @@ class PAWForm extends Component {
 
 		if (event.target.name === 'sensors'){
 			if (event.target.value.length > 0){
-				fetch(`http://dev.agviewer.net/api/extracts/${event.target.value[0].id}/`)
+				fetch(`http://beta.agviewer.net/api/extracts/${event.target.value[0].id}/`)
 				.then(response => response.json())
 				.then(extracts => {
 					this.setState({
@@ -479,7 +479,7 @@ class CustomFormulaForm extends Component {
 
 		if (event.target.name === 'sensors'){
 			if (event.target.value.length > 0){
-				fetch(`http://dev.agviewer.net/api/extracts/${event.target.value[0].id}/`)
+				fetch(`http://beta.agviewer.net/api/extracts/${event.target.value[0].id}/`)
 				.then(response => response.json())
 				.then(extracts => {
 					this.setState({
@@ -635,7 +635,7 @@ class ModalForm extends Component {
 	}
 
 	addGraph () {
-		let url = `http://dev.agviewer.net/api/graphs/${this.props.chartId}/`,
+		let url = `http://beta.agviewer.net/api/graphs/${this.props.chartId}/`,
 		options = {
 			method:'POST',
 	        body:JSON.stringify(this.newGraph),
@@ -660,7 +660,7 @@ class ModalForm extends Component {
 	}
 
 	removeGraph (graph) {
-		let url = `http://dev.agviewer.net/api/graph/${graph}/`,
+		let url = `http://beta.agviewer.net/api/graph/${graph}/`,
 		options = {
 			method:'DELETE',
 	        headers: {

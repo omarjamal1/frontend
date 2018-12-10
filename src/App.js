@@ -171,7 +171,7 @@ class Dashboard extends Component {
   }
 
   addWidget(widget){
-    let url = 'http://dev.agviewer.net/api/charts/' + this.props.tabId + '/';
+    let url = 'http://beta.agviewer.net/api/charts/' + this.props.tabId + '/';
     fetch(url, 
       {
         method:'POST',
@@ -210,7 +210,7 @@ class Dashboard extends Component {
 
   loadCharts () {
     
-    let url = 'http://dev.agviewer.net/api/charts/' + this.props.tabId;
+    let url = 'http://beta.agviewer.net/api/charts/' + this.props.tabId;
     fetch(url)
     .then((response) => {
       return response.json();
@@ -225,7 +225,7 @@ class Dashboard extends Component {
 
   loadSensors() {
 
-    let url = 'http://dev.agviewer.net/api/sensors/';
+    let url = 'http://beta.agviewer.net/api/sensors/';
     fetch(url)
     .then((response) => {
       return response.json();
@@ -353,7 +353,7 @@ class App extends Component {
 
   signin = (credentials) => {
 
-    let url = 'http://dev.agviewer.net/api/login/';
+    let url = 'http://beta.agviewer.net/api/login/';
     fetch(url, 
       {
         method:'POST',
@@ -375,7 +375,7 @@ class App extends Component {
   }
 
   loadTabs(){
-    fetch('http://dev.agviewer.net/api/tabs/')
+    fetch('http://beta.agviewer.net/api/tabs/')
     .then((response) => {
       return response.json();
     })
