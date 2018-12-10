@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+fimport React, {Component} from 'react';
 import { Dialog, DialogActionsBar } from '@progress/kendo-react-dialogs';
 import { DropDownList, MultiSelect } from '@progress/kendo-react-dropdowns';
 import { Input, NumericTextBox } from '@progress/kendo-react-inputs';
