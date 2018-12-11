@@ -334,6 +334,9 @@ class App extends Component {
   loadTabs(){
     fetch('http://dev.agviewer.net/api/tabs/')
     .then((response) => {
+      // response.text().then((text) => {
+      //   console.log(text);
+      // });
       return response.json();
     })
     .then((tabs) => {
@@ -343,7 +346,10 @@ class App extends Component {
         tabs:tabs
       });
     })
-    .catch(error => console.error('Error:', error));
+    .catch(error => {
+      console.error('Error:', error);
+      window.location.href = 'http://dev.agviewer.net/login/';
+    });
   }
 
   navigate(e, page){
