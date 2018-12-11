@@ -641,6 +641,7 @@ class ModalForm extends Component {
 	        body:JSON.stringify(this.newGraph),
 	        headers: {
 	            "Content-Type": "application/json; charset=utf-8",
+	            "X-CSRFToken": getCookie("csrftoken")
 			}
 		}
 
@@ -665,6 +666,7 @@ class ModalForm extends Component {
 			method:'DELETE',
 	        headers: {
 	            "Content-Type": "application/json; charset=utf-8",
+	            "X-CSRFToken": getCookie("csrftoken")
 			}
 		}
 
