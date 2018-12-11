@@ -79,6 +79,16 @@ class Layout extends Component {
                 Stations
               </a>
             </nav>
+            <div className="ag-spacer">
+            </div>
+            <div className="ag-logout-ctn">
+              <a  
+                className="mdl-navigation__link ag-logout"
+                onClick={(e) => {this.props.logout(e)}}
+              href='/logout/'>
+                Logout
+              </a>
+            </div>
           </div>
 
           <main className="mdl-layout__content">
@@ -291,6 +301,7 @@ class App extends Component {
     this.loadTabs = this.loadTabs.bind(this);
     this.loadTabs();
     this.signin = this.signin.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount(){
@@ -360,6 +371,26 @@ class App extends Component {
     });
   }
 
+  logout(e) {
+
+    e.preventDefault();
+    let url = 'http://dev.agviewer.net/logout/';
+    fetch(url, 
+      {
+        method:'POST',
+        headers: {
+            "Content-Type": "application/json; charset=utf-8",
+            "X-CSRFToken": getCookie("csrftoken")
+        },
+      }
+    )
+    .then((response) => {
+      window.location.href = 'http://dev.agviewer.net/login/';
+    })
+    .catch(error => console.error('Error:', error));
+
+  }
+
   render() {
 
     let page, tabs;
@@ -416,6 +447,7 @@ class App extends Component {
           content={page}
           tabs={tabs}
           onClick={this.navigate}
+          logout={this.logout}
           addTab={this.addTab}
         />
     );
