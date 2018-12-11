@@ -173,6 +173,7 @@ class Dashboard extends Component {
       {
         method:'POST',
         body:JSON.stringify(widget),
+        credentials: 'same-origin'
         headers: {
             "Content-Type": "application/json; charset=utf-8",
         },
