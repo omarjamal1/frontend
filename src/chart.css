@@ -245,6 +245,27 @@
 .login-card .mdl-card__actions {
   display: flex;
 }
+
+.ag-spacer {
+  flex-grow: 1;
+}
+
+.ag-logout-ctn {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  padding-bottom: 16px;
+}
+
+.ag-logout {
+  padding: 16px 40px;
+}
+
+.ag-logout:hover {
+  cursor: pointer;
+  background: #e5e5e5;
+
+}
 /* End: Graph chips*/
 
 
