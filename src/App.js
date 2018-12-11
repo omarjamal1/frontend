@@ -94,54 +94,22 @@ class Layout extends Component {
   }
 }
 
-var data1 = [{
-        "date": "2012-07-27",
-        "value": 13
-    }, {
-        "date": "2012-07-28",
-        "value": 11
-    }, {
-        "date": "2012-07-29",
-        "value": 15
-    }, {
-        "date": "2012-07-30",
-        "value": 16
-    }, {
-        "date": "2012-07-31",
-        "value": 18
-    }, {
-        "date": "2012-08-01",
-        "value": 13
-    }, {
-        "date": "2012-08-02",
-        "value": 22
-    }, {
-        "date": "2012-08-03",
-        "value": 23
-    }];
-
-var data2 = [{
-        "date": "2012-08-04",
-        "value": 20
-    }, {
-        "date": "2012-08-05",
-        "value": 17
-    }, {
-        "date": "2012-08-06",
-        "value": 16
-    }, {
-        "date": "2012-08-07",
-        "value": 18
-    }, {
-        "date": "2012-08-08",
-        "value": 21
-    }, {
-        "date": "2012-08-09",
-        "value": 26
-    }, {
-        "date": "2012-08-10",
-        "value": 24
-    }];
+// using jQuery
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
 
 
 class Dashboard extends Component {
@@ -176,6 +144,7 @@ class Dashboard extends Component {
         credentials: 'include',
         headers: {
             "Content-Type": "application/json; charset=utf-8",
+            "X-CSRFToken": getCookie("csrftoken")
         },
       }
     )
