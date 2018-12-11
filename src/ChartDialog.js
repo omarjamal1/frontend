@@ -4,6 +4,23 @@ import { DropDownList, MultiSelect } from '@progress/kendo-react-dropdowns';
 import { Input, NumericTextBox } from '@progress/kendo-react-inputs';
 import {DateRangePicker} from '@progress/kendo-react-dateinputs';
 
+// function to get csrfcookie
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 
 class GraphChip extends Component {
 	constructor (props) {
@@ -641,6 +658,7 @@ class ModalForm extends Component {
 	        body:JSON.stringify(this.newGraph),
 	        headers: {
 	            "Content-Type": "application/json; charset=utf-8",
+	            "X-CSRFToken": getCookie("csrftoken")
 			}
 		}
 
@@ -665,6 +683,7 @@ class ModalForm extends Component {
 			method:'DELETE',
 	        headers: {
 	            "Content-Type": "application/json; charset=utf-8",
+	            "X-CSRFToken": getCookie("csrftoken")
 			}
 		}
 

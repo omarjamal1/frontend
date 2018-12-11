@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import './App.css';
 import 'material-design-lite/material.min.css';
@@ -94,7 +95,7 @@ class Layout extends Component {
   }
 }
 
-// using jQuery
+// function to get csrfcookie
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== '') {
