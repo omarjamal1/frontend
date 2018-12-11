@@ -122,7 +122,6 @@ class Dashboard extends Component {
       charts: [],
     };
 
-    this.changeData = this.changeData.bind(this);
     this.loadCharts = this.loadCharts.bind(this);
     this.openWidgetDialog = this.openWidgetDialog.bind(this);
     this.closeWidgetDialog = this.closeWidgetDialog.bind(this);
@@ -204,27 +203,6 @@ class Dashboard extends Component {
     })
     .catch(error => console.error('Error: ', error));
 
-  }
-
-  changeData(){
-      this.setState({
-        charts:[
-          {
-            id: 'c2',
-            data: data1,
-            options: {
-              type: 'column'
-            }
-          },
-          {
-            id:'c1',
-            data: data2,
-            options: {
-              type: 'column'
-            }
-          }
-          ]
-      });
   }
 
   render() {
